@@ -1,1 +1,42 @@
-hej
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>PinIt!</title>
+  <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <a class="navbar-brand"><i class="glyphicon glyphicon-pin"></i>PinIT!</a>
+    </div>
+  </nav>
+
+  <div class="container" id="pins">
+
+
+    <form class="form-inline">
+      <input class="form-control" placeholder="Url" v-model="pin.url">
+      <input class="form-control" placeholder="Description" v-model="pin.description">
+      <button class="btn btn-primary" @click="addPin">Add</button>
+    </form>
+
+
+    <div class="row">
+      <div class="col-xs-3 well" v-for="pin in pins">
+        <img class="img-responsive" v-bind:src="pin.url" alt="" />
+        <h3>{{pin.description}}</h3>
+        <h5>Stars : {{pin.stars}}</h5>
+        <button class="btn btn-xs btn-danger" @click="starPin($index)">Star</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="/js/vue/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
+  <script src="/js/app.js"></script>
+</body>

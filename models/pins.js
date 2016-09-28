@@ -1,10 +1,11 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var pinSchema = mongoose.Schema({
+var pinSchema = new Schema({
     userId      : String,
     description : String,
     stars       : Number,
-    url         : [String]
+    url         : String
 });
 
-module.exports = mongoose.model('Pins', pinSchema);
+module.exports = mongoose.model('Pin', pinSchema);
