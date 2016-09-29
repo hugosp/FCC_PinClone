@@ -2,6 +2,7 @@
 
 module.exports = function(app, passport) {
     var Pin     = require('../models/pins');
+    var User     = require('../models/user');
 
     app.get('/', function(req, res) {
         res.sendFile('index.html');
@@ -21,9 +22,17 @@ module.exports = function(app, passport) {
     });
 
     app.get('/get',function(req,res) {
-        Pin.find().sort({stars: -1}).exec(function(err,data) {
-            res.json(data);
-        });
+        //Pin.find().sort({stars: -1}).exec(function(err,data) {
+            console.log(req.query.id);
+        if(Object.keys(req.query).length === 0) {
+            Pin.find().exec(function(err,data) {
+                res.json(data);
+            });
+        } else {
+            Pin.find({userId:req.query.id}).exec(function(err,data) {
+                res.json(data);
+            });
+        }
     }); 
 
     app.post('/delete',function(req,res) {
@@ -33,6 +42,15 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.get('/userimg',function(req,res) {
+        User.find({},'twitter.id twitter.img twitter.username',function(err,data){
+            var temp =[];
+            for(var i=0;i<data.length;i++) {
+                temp.push({id:data[i].twitter.id,img:data[i].twitter.img,username:data[i].twitter.username});
+            }
+            res.json(temp);
+        })
+    });
     
     app.post('/star',function(req,res) {
         console.log(req.body.stars);

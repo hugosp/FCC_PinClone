@@ -14,9 +14,13 @@
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <a class="navbar-brand"><i class="glyphicon glyphicon-hand-right"></i> PinIT!</a>
+        
+        <a class="navbar-brand" @click="fetchPins()"> All Pins</a>
+        <a class="navbar-brand" @click="showMine($index)"> My Pins</a>
+        
         <a class="navbar-brand pull-right" href="/logout" v-if="user.id">Logout</a>
-        <a class="navbar-brand pull-right" v-if="user.id"><img class="img-responsive img-circle" :src="user.img" /></a>
-                <a class="navbar-brand pull-right" href="/auth/twitter" v-else>Login</a>
+        <a class="navbar-brand pull-right" v-if="user.id"><img class="img-profile" :src="user.img" /></a>
+        <a class="navbar-brand pull-right" href="/auth/twitter" v-else>Login</a>
       </div>
     </nav>
 
@@ -31,13 +35,15 @@
         </div>
        </div>
 
-      <div class="row">
-        <div class="col-xs-3 well" v-for="pin in pins">
+      <div class="mason">
+        <div class="mason-item box" v-for="pin in pins">
           <img class="img-responsive" v-bind:src="pin.url" alt="" />
-          <h3>{{pin.description}}</h3>
-          <div v-if="user.id">
-            <button class="btn btn-xs btn-danger pull-right" @click="deletePin($index)">Delete</button>
-            <button class="btn btn-xs btn-primary pull-right" @click="starPin($index)"> {{pin.stars}} :  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star</button>
+          <h5>{{ pin.description }}</h5>
+          <!-- <div>{{ imageAndId(pin.userId) }}</div> -->
+          <div>
+            <img class="img-profile" v-bind:src="imageAndId(pin.userId)" alt="" />
+            <button v-if="user.id" class="btn btn-xs btn-danger pull-right" @click="deletePin($index)">Delete</button>
+            <button v-if="user.id" class="btn btn-xs btn-primary pull-right" @click="starPin($index)"> {{pin.stars}} :  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star</button>
           </div>
         </div>
       </div>

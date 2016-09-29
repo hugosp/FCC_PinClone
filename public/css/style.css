@@ -1,8 +1,36 @@
-.well {
-    margin: 5px;
-    padding: 3px;
-    box-shadow: 3px 3px 10px;
+body {
+    background-color: darkcyan;
 }
+.box {
+    padding: 3px;
+    /*box-shadow: 3px 3px 10px;*/
+    border: 1px solid #444;
+    border-radius: 3px;
+    background-color: white;
+}
+
+.btn {
+    margin-left: 5px;
+}
+
 .form-inline {
     margin-bottom: 20px;
+}
+
+.mason {
+    column-count: auto;
+    column-width: 150px;
+    column-gap: 1em;
+}
+
+.mason-item {
+    display: inline-block;
+    margin: 0 0 0.8em;
+    width: 100%;
+}
+
+.img-profile {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
 }
