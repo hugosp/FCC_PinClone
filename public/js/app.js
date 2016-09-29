@@ -6,11 +6,13 @@ new Vue({
             url: '',
             description: ''
         },
+        user: {},
         pins: []
     },
 
     ready: function() {
         this.fetchPins();
+        this.fetchUser();
     },
 
     methods: {
@@ -20,23 +22,35 @@ new Vue({
                 this.$set('pins', data.body);
             });
         },
+        fetchUser: function() {
+            this.$http.get('/profile').then(function(data,err) {
+                if(err) { console.log(err); }
+                this.$set('user', data.body);
+            });
+        },
         addPin: function(e) {
             e.preventDefault();
             
-            if (this.pin.url && this.pin.description) {
+            if (this.pin.url && this.pin.description && this.user.id) {
+                this.pin.userId = this.user.id;
                 this.$http.post('/insert',this.pin).then(function(res){
                     this.pin = {
                         url: '',
                         description: ''
                     };
                     this.fetchPins();
-                    console.log(res);
-                });
+                    });
             }
         },
         starPin: function(index) {
-            var star = this.pins[index].stars++;
-            this.$set(index,{'stars': star});
+            this.$http.post('/star',{id:this.pins[index]._id}).then(function(res){
+                this.fetchPins();
+            });
+        },
+        deletePin: function(index) {
+            this.$http.post('/delete',{id:this.pins[index]._id}).then(function(res){
+                this.fetchPins();
+            });
         }
     }
 });

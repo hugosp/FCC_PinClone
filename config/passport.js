@@ -1,6 +1,5 @@
 var TwitterStrategy = require('passport-twitter').Strategy;
 var User            = require('../models/user');
-//if(process.env.DEV == "yes") { require('dotenv').config(); }
 
 module.exports = function(passport) {
 
@@ -28,11 +27,13 @@ module.exports = function(passport) {
                 if (user) {
                     return done(null, user);
                 } else {
-                    var newUser                 = new User();
-                    newUser.twitter.id          = profile.id;
-                    newUser.twitter.token       = token;
-                    newUser.twitter.username    = profile.username;
-                    newUser.twitter.displayName = profile.displayName;
+                    console.log(profile);
+                    var newUser                         = new User();
+                    newUser.twitter.id                  = profile.id;
+                    newUser.twitter.token               = token;
+                    newUser.twitter.username            = profile.username;
+                    newUser.twitter.displayName         = profile.displayName;
+                    newUser.twitter.img                 = profile.photos[0].value;
 
                     newUser.save(function(err) {
                         if (err)

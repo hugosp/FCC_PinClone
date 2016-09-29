@@ -1,0 +1,8 @@
+.well {
+    margin: 5px;
+    padding: 3px;
+    box-shadow: 3px 3px 10px;
+}
+.form-inline {
+    margin-bottom: 20px;
+}

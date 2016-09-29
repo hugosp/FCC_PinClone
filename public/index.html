@@ -3,38 +3,46 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PinIt!</title>
   <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
+  <div id="pins">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <a class="navbar-brand"><i class="glyphicon glyphicon-hand-right"></i> PinIT!</a>
+        <a class="navbar-brand pull-right" href="/logout" v-if="user.id">Logout</a>
+        <a class="navbar-brand pull-right" v-if="user.id"><img class="img-responsive img-circle" :src="user.img" /></a>
+                <a class="navbar-brand pull-right" href="/auth/twitter" v-else>Login</a>
+      </div>
+    </nav>
 
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <a class="navbar-brand"><i class="glyphicon glyphicon-pin"></i>PinIT!</a>
-    </div>
-  </nav>
+    <div class="container">
+       <div class="row" v-if="user.id">
+        <div class="col-xs-12">
+          <form class="form-inline">
+            <input class="form-control" placeholder="Url" v-model="pin.url">
+            <input class="form-control" placeholder="Description" v-model="pin.description">
+            <button class="btn btn-primary" @click="addPin">Add</button>
+          </form>
+        </div>
+       </div>
 
-  <div class="container" id="pins">
-
-
-    <form class="form-inline">
-      <input class="form-control" placeholder="Url" v-model="pin.url">
-      <input class="form-control" placeholder="Description" v-model="pin.description">
-      <button class="btn btn-primary" @click="addPin">Add</button>
-    </form>
-
-
-    <div class="row">
-      <div class="col-xs-3 well" v-for="pin in pins">
-        <img class="img-responsive" v-bind:src="pin.url" alt="" />
-        <h3>{{pin.description}}</h3>
-        <h5>Stars : {{pin.stars}}</h5>
-        <button class="btn btn-xs btn-danger" @click="starPin($index)">Star</button>
+      <div class="row">
+        <div class="col-xs-3 well" v-for="pin in pins">
+          <img class="img-responsive" v-bind:src="pin.url" alt="" />
+          <h3>{{pin.description}}</h3>
+          <div v-if="user.id">
+            <button class="btn btn-xs btn-danger pull-right" @click="deletePin($index)">Delete</button>
+            <button class="btn btn-xs btn-primary pull-right" @click="starPin($index)"> {{pin.stars}} :  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
   <!-- JS -->
   <script src="/js/vue/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>

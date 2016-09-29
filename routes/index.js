@@ -7,14 +7,6 @@ module.exports = function(app, passport) {
         res.sendFile('index.html');
     });
 
-   
-    app.get('/profile', isLoggedIn, function(req, res) {
-        res.send(res.locals);
-    });
-    app.get('/error', isLoggedIn, function(req, res) {
-        res.send('Error Logging in :/');
-    });
-
     app.post('/insert',function(req,res) {
         console.log(req.body);
         var newPin = new Pin ({
@@ -29,32 +21,53 @@ module.exports = function(app, passport) {
     });
 
     app.get('/get',function(req,res) {
-        Pin.find({},function(err,data) {
+        Pin.find().sort({stars: -1}).exec(function(err,data) {
             res.json(data);
         });
     }); 
-    
-    // --------------------- HANDLE LOGINS/AUTH ---------------------------- 
-    
-    app.get('/login', function(req, res) {
-        res.render('login', { message: req.flash('loginMessage') }); 
+
+    app.post('/delete',function(req,res) {
+        Pin.findOneAndRemove({_id:req.body.id},function(err){
+            if (err) throw err;
+            res.send('deleted');
+        });
     });
 
-   app.get('/logout', function(req, res) {
+    
+    app.post('/star',function(req,res) {
+        console.log(req.body.stars);
+        Pin.findOneAndUpdate({_id:req.body.id},{$inc:{stars:1}},{new: true},function(err,doc){
+            if (err) throw err;
+            console.log(doc);
+            res.send('added star'+doc);
+        });
+    });
+
+    // --------------------- HANDLE LOGINS/AUTH ---------------------------- 
+
+    app.get('/profile', isLoggedIn, function(req, res) {
+        res.send(res.locals.user.twitter);
+    });
+
+    app.get('/error', isLoggedIn, function(req, res) {
+        res.send('Error Logging in :/');
+    });
+
+    app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/');
     });
 
     app.get('/auth/twitter', passport.authenticate('twitter'));
     app.get('/auth/twitter/callback', passport.authenticate('twitter', { 
-        successRedirect : '/profile', 
+        successRedirect : '/', 
         failureRedirect : '/error' 
     }));
     
     function isLoggedIn(req, res, next) {
         if (req.isAuthenticated())
             return next();
-        res.redirect('/login');
+        res.redirect('/');
     }
 }
 
