@@ -1,21 +1,29 @@
 body {
-    background-color: darkcyan;
-}
-.box {
-    padding: 3px;
-    /*box-shadow: 3px 3px 10px;*/
-    border: 1px solid #444;
-    border-radius: 3px;
+    font-family: 'Open Sans', sans-serif;
     background-color: white;
 }
 
 .btn {
     margin-left: 5px;
+    margin-right: 5px;
 }
+
+.navbar {
+    background-color: #2B2E37;
+    border-radius: 0;
+    border: 0;
+}
+
+.navbar-brand {
+    color: white !important;
+    cursor: pointer;
+}
+
 
 .form-inline {
     margin-bottom: 20px;
 }
+
 
 .mason {
     column-count: auto;
@@ -27,10 +35,33 @@ body {
     display: inline-block;
     margin: 0 0 0.8em;
     width: 100%;
+    padding-top: 0;
+    padding-bottom: 3px;
+    /*box-shadow: 3px 3px 10px;*/
+    box-shadow: 0 4px 2px -2px gray;
+    border: 1px solid #7D8287;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: white;
+    overflow: hidden;
 }
 
 .img-profile {
     width: 20px;
     height: 20px;
     border-radius: 3px;
+    margin-left: 3px;
+}
+.description {
+    margin-left: 3px;
+    margin-right: 3px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+.hr-pinne {
+    margin: 3px;
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #666, #ccc);
 }

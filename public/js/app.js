@@ -18,11 +18,14 @@ new Vue({
     },
 
     methods: {
-        fetchPins: function() {
-            this.$http.get('/get').then(function(data,err) {
+        fetchPins: function(id) {
+            this.$http.get('/get?id='+id).then(function(data,err) {
                 if(err) { console.log(err); }
                 this.$set('pins', data.body);
             });
+        },
+           showMine: function(index) {
+            
         },
         fetchImgs: function() {
             this.$http.get('/userimg').then(function(data,err) {
@@ -68,13 +71,6 @@ new Vue({
                 username = this.images.find(x => x.id === id).username; 
             }
             return img;
-        },
-        showMine: function(index) {
-            this.$http.get('/get?id='+this.user.id).then(function(data,err) {
-                if(err) { console.log(err); }
-                this.$set('pins', data.body);
-            });
         }
-        
     }
 });

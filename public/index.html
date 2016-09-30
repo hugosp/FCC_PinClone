@@ -7,16 +7,17 @@
   <title>PinIt!</title>
   <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet">
 </head>
 
 <body>
   <div id="pins">
     <nav class="navbar navbar-default">
       <div class="container-fluid">
-        <a class="navbar-brand"><i class="glyphicon glyphicon-hand-right"></i> PinIT!</a>
+        <a class="navbar-brand"><i class="glyphicon glyphicon-hand-right"></i></a>
         
         <a class="navbar-brand" @click="fetchPins()"> All Pins</a>
-        <a class="navbar-brand" @click="showMine($index)"> My Pins</a>
+        <a v-if="user.id" class="navbar-brand" @click="fetchPins(user.id)"> My Pins</a>
         
         <a class="navbar-brand pull-right" href="/logout" v-if="user.id">Logout</a>
         <a class="navbar-brand pull-right" v-if="user.id"><img class="img-profile" :src="user.img" /></a>
@@ -28,6 +29,7 @@
        <div class="row" v-if="user.id">
         <div class="col-xs-12">
           <form class="form-inline">
+            <label>Add Pin : </label>
             <input class="form-control" placeholder="Url" v-model="pin.url">
             <input class="form-control" placeholder="Description" v-model="pin.description">
             <button class="btn btn-primary" @click="addPin">Add</button>
@@ -38,10 +40,11 @@
       <div class="mason">
         <div class="mason-item box" v-for="pin in pins">
           <img class="img-responsive" v-bind:src="pin.url" alt="" />
-          <h5>{{ pin.description }}</h5>
+          <h5 class="description">{{ pin.description }}</h5>
           <!-- <div>{{ imageAndId(pin.userId) }}</div> -->
+          <hr class="hr-pinne"/>
           <div>
-            <img class="img-profile" v-bind:src="imageAndId(pin.userId)" alt="" />
+            <img class="img-profile" @click="fetchPins(pin.userId)" v-bind:src="imageAndId(pin.userId)" alt="" />
             <button v-if="user.id" class="btn btn-xs btn-danger pull-right" @click="deletePin($index)">Delete</button>
             <button v-if="user.id" class="btn btn-xs btn-primary pull-right" @click="starPin($index)"> {{pin.stars}} :  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star</button>
           </div>

@@ -22,9 +22,8 @@ module.exports = function(app, passport) {
     });
 
     app.get('/get',function(req,res) {
-        //Pin.find().sort({stars: -1}).exec(function(err,data) {
-            console.log(req.query.id);
-        if(Object.keys(req.query).length === 0) {
+        console.log(req.query.id);
+        if(req.query.id =='undefined') {
             Pin.find().exec(function(err,data) {
                 res.json(data);
             });
