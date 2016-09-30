@@ -39,13 +39,12 @@
 
       <div class="mason">
         <div class="mason-item box" v-for="pin in pins">
-          <img class="img-responsive" v-bind:src="pin.url" alt="" />
+          <img class="img-responsive" v-bind:src="pin.url" onError="this.onerror=null;this.src='/error.png';" alt="" />
           <h5 class="description">{{ pin.description }}</h5>
-          <!-- <div>{{ imageAndId(pin.userId) }}</div> -->
           <hr class="hr-pinne"/>
           <div>
             <img class="img-profile" @click="fetchPins(pin.userId)" v-bind:src="imageAndId(pin.userId)" alt="" />
-            <button v-if="user.id" class="btn btn-xs btn-danger pull-right" @click="deletePin($index)">Delete</button>
+            <button v-if="user.id == pin.userId" class="btn btn-xs btn-danger pull-right" @click="deletePin($index)">Delete</button>
             <button v-if="user.id" class="btn btn-xs btn-primary pull-right" @click="starPin($index)"> {{pin.stars}} :  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star</button>
           </div>
         </div>
