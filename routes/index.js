@@ -8,7 +8,7 @@ module.exports = function(app, passport) {
         res.sendFile('index.html');
     });
 
-    app.post('/insert',function(req,res) {
+    app.post('/insert',isLoggedIn,function(req,res) {
         console.log(req.body);
         var newPin = new Pin ({
             url: req.body.url,
@@ -34,7 +34,7 @@ module.exports = function(app, passport) {
         }
     }); 
 
-    app.post('/delete',function(req,res) {
+    app.post('/delete',isLoggedIn,function(req,res) {
         Pin.findOneAndRemove({_id:req.body.id},function(err){
             if (err) throw err;
             res.send('deleted');
