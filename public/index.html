@@ -18,6 +18,7 @@
         
         <a class="navbar-brand" @click="fetchPins()"> All Pins</a>
         <a v-if="user.id" class="navbar-brand" @click="fetchPins(user.id)"> My Pins</a>
+        <!-- <a v-if="user.id" class="navbar-brand" @click="fetchPins(user.id)"> My Stared Pins</a> -->
         
         <a class="navbar-brand pull-right" href="/logout" v-if="user.id">Logout</a>
         <a class="navbar-brand pull-right" v-if="user.id"><img class="img-profile" :src="user.img" /></a>
@@ -45,7 +46,7 @@
           <div>
             <img class="img-profile" @click="fetchPins(pin.userId)" v-bind:src="imageAndId(pin.userId)" alt="" />
             <button v-if="user.id == pin.userId" class="btn btn-xs btn-danger pull-right" @click="deletePin($index)">Delete</button>
-            <button v-if="user.id" class="btn btn-xs btn-primary pull-right" @click="starPin($index)"> {{pin.stars}} :  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star</button>
+            <!-- <button v-if="user.id" class="btn btn-xs btn-primary pull-right" @click="starPin($index)"> {{pin.stars}} :  <span class="glyphicon glyphicon-star" aria-hidden="true"></span></button> -->
           </div>
         </div>
       </div>

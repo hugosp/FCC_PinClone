@@ -52,12 +52,12 @@ new Vue({
                     this.fetchPins();
                     });
             }
-        },
+        },/*
         starPin: function(index) {
             this.$http.post('/star',{id:this.pins[index]._id}).then(function(res){
                 this.fetchPins();
             });
-        },
+        },*/
         deletePin: function(index) {
             this.$http.post('/delete',{id:this.pins[index]._id}).then(function(res){
                 this.fetchPins();
