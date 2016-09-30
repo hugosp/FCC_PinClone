@@ -24,7 +24,7 @@ module.exports = function(app, passport) {
     app.get('/get',function(req,res) {
         console.log(req.query.id);
         if(req.query.id =='undefined') {
-            Pin.find().exec(function(err,data) {
+            Pin.find().sort({_id: -1}).exec(function(err,data) {
                 res.json(data);
             });
         } else {
